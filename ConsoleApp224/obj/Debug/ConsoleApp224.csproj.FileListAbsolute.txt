@@ -1,0 +1,8 @@
+C:\Users\vita-\Desktop\ДЗ\ConsoleApp224\ConsoleApp224\bin\Debug\ConsoleApp224.exe.config
+C:\Users\vita-\Desktop\ДЗ\ConsoleApp224\ConsoleApp224\bin\Debug\ConsoleApp224.exe
+C:\Users\vita-\Desktop\ДЗ\ConsoleApp224\ConsoleApp224\bin\Debug\ConsoleApp224.pdb
+C:\Users\vita-\Desktop\ДЗ\ConsoleApp224\ConsoleApp224\obj\Debug\ConsoleApp224.csproj.AssemblyReference.cache
+C:\Users\vita-\Desktop\ДЗ\ConsoleApp224\ConsoleApp224\obj\Debug\ConsoleApp224.csproj.SuggestedBindingRedirects.cache
+C:\Users\vita-\Desktop\ДЗ\ConsoleApp224\ConsoleApp224\obj\Debug\ConsoleApp224.csproj.CoreCompileInputs.cache
+C:\Users\vita-\Desktop\ДЗ\ConsoleApp224\ConsoleApp224\obj\Debug\ConsoleApp224.exe
+C:\Users\vita-\Desktop\ДЗ\ConsoleApp224\ConsoleApp224\obj\Debug\ConsoleApp224.pdb
