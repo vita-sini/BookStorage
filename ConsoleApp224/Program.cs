@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ConsoleApp224
 {
@@ -18,7 +20,7 @@ namespace ConsoleApp224
 
     class Storage
     {
-        private List<Book> _book = new List<Book>();
+        private List<Book> _books = new List<Book>();
 
         private int _bookId = 0;
 
@@ -54,7 +56,7 @@ namespace ConsoleApp224
                         break;
 
                     case CommandShowBook:
-                        ShowBook();
+                        ShowBooks(_books);
                         break;
 
                     case CommandRemoveBook:
@@ -94,11 +96,11 @@ namespace ConsoleApp224
 
             if (int.TryParse(userInput, out int number))
             {
-                for (int i = 0; i < _book.Count; i++)
+                for (int i = 0; i < _books.Count; i++)
                 {
-                    if (number == _book[i].UniqueNumber)
+                    if (number == _books[i].UniqueNumber)
                     {
-                        book = _book[i];
+                        book = _books[i];
                         return true;
                     }
                 }
@@ -113,12 +115,9 @@ namespace ConsoleApp224
             Console.WriteLine("Введите название книги: ");
             string userInput = Console.ReadLine().ToUpper();
 
-            var filteredTitle = _book.Where(book => book.Title.ToUpper() == userInput);
+            var filtered = _books.Where(book => book.Title.ToUpper() == userInput);
 
-            foreach (var book in filteredTitle)
-            {
-                Console.WriteLine($"{book.UniqueNumber}.Название: {book.Title} - автор: {book.Author} - год выпуска: {book.YearRelease}");
-            }
+            ShowBooks(filtered);
         }
 
         private void ShowBooksAuthor()
@@ -126,32 +125,20 @@ namespace ConsoleApp224
             Console.WriteLine("Введите название книги: ");
             string userInput = Console.ReadLine().ToUpper();
 
-            var filteredTitle = _book.Where(book => book.Title.ToUpper() == userInput);
+            var filtered = _books.Where(book => book.Author.ToUpper() == userInput);
 
-            foreach (var book in filteredTitle)
-            {
-                Console.WriteLine($"{book.UniqueNumber}.Название: {book.Title} - автор: {book.Author} - год выпуска: {book.YearRelease}");
-            }
+            ShowBooks(filtered);
         }
 
         private void ShowBooksYearRelease()
         {
             Console.WriteLine("Введите год выпуска: ");
-            string userInput = Console.ReadLine();
 
-            var filteredTitle = _book.Where(book => book.Title == userInput);
-
-            foreach (var book in filteredTitle)
+            if (int.TryParse(Console.ReadLine(), out int yearRelease) != false)
             {
-                Console.WriteLine($"{book.UniqueNumber}.Название: {book.Title} - автор: {book.Author} - год выпуска: {book.YearRelease}");
-            }
-        }
+                var filtered = _books.Where(book => book.YearRelease == yearRelease);
 
-        private void RemoveBook()
-        {
-            if (TryGetBook(out Book book))
-            {
-                _book.Remove(book);
+                ShowBooks(filtered);
             }
             else
             {
@@ -159,11 +146,23 @@ namespace ConsoleApp224
             }
         }
 
-        private void ShowBook()
+        private void ShowBooks(IEnumerable<Book> books)
         {
-            for (int i = 0; i < _book.Count; i++)
+            foreach (var book in books)
             {
-                Console.WriteLine($"{_book[i].UniqueNumber}.Название: {_book[i].Title} - автор: {_book[i].Author} - год выпуска: {_book[i].YearRelease}");
+                book.ShowInfo();
+            }
+        }
+
+        private void RemoveBook()
+        {
+            if (TryGetBook(out Book book))
+            {
+                _books.Remove(book);
+            }
+            else
+            {
+                OutputText();
             }
         }
 
@@ -180,7 +179,7 @@ namespace ConsoleApp224
             if (int.TryParse(Console.ReadLine(), out int yearRelease) != false)
             {
                 _bookId++;
-                _book.Add(new Book(title, author, yearRelease, _bookId));
+                _books.Add(new Book(title, author, yearRelease, _bookId));
             }
             else
             {
@@ -208,5 +207,10 @@ namespace ConsoleApp224
         public string Title { get; private set; }
         public string Author { get; private set; }
         public int YearRelease { get; private set; }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{UniqueNumber}.Название: {Title} - автор: {Author} - год выпуска: {YearRelease}");
+        }
     }
 }
